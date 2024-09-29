@@ -35,7 +35,6 @@ public class CompanyServiceImpl implements CompanyService{
         if(company!=null){
             company.setDescription(updatedCompany.getDescription());
             company.setName(updatedCompany.getName());
-            company.setJobId(updatedCompany.getJobId());
             companyRepository.save(company);
             return true;
         }
