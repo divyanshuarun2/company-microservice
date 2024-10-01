@@ -1,0 +1,48 @@
+#docker run -d --name contianer_name
+#-e VAR=VALUE
+#-e VAR=VALUE
+#-e VAR=VALUE
+# -p 8080:8080
+#--network n/w_name
+#-v postgres:/data/postgres
+#--restart unless-stopped
+#<img name>
+
+#network and volume should be defined with same level as servers
+
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres:16
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: osho@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
+volumes:
+  postgres:
+  pgadmin:
